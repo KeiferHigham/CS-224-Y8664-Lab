@@ -1,0 +1,45 @@
+
+SOURCE CODE
+
+OBJECT CODE
+                               | # Initial code
+0x0000: 30f40001000000000000   | irmovq Stack,%rsp
+0x000a: 30f20300000000000000   | irmovq $3,%rdx
+0x0014: 30f65000000000000000   | irmovq dest,%rsi
+0x001e: 30f73800000000000000   | irmovq src,%rdi
+0x0028: 806800000000000000     | call copy_block
+0x0031: 00                     | halt
+                               |  
+0x0032:                        | .align 8
+                               | # Source array
+0x0038:                        | src:
+0x0038: 0a                     | .quad 0x00a
+0x0040: b0                     | .quad 0x0b0
+0x0048: 000c                   | .quad 0xc00
+                               | 
+                               | # Destination array
+0x0050:                        | dest:
+0x0050: 1101                   | .quad 0x111
+0x0058: 2202                   | .quad 0x222
+0x0060: 3303                   | .quad 0x333
+                               |  
+                               |  # long copy_block(long *src, long *dest, long len)
+                               | # src in %rdi, dest in %rsi, len in %rdx
+0x0068:                        | copy_block:
+0x0068: 6300                   | xorq %rax,%rax		# result = 0
+0x006a: 6222                   | andq %rdx,%rdx		# len : 0?
+0x006c: 71ae00000000000000     | jle L4			# <=, goto done
+0x0075: 50a70000000000000000   | L5:	mrmovq (%rdi),%r10	# Loop: val = *src
+0x007f: 40a60000000000000000   | rmmovq %r10,(%rsi)	# *dest = val
+0x0089: 30fb0800000000000000   | irmovq $8,%r11
+0x0093: 60b7                   | addq %r11,%rdi		# src++
+0x0095: 60b6                   | addq %r11,%rsi		# dest++
+0x0097: 63a0                   | xorq %r10,%rax		# result ^= val
+0x0099: 30fb0100000000000000   | irmovq $1,%r11
+0x00a3: 61b2                   | subq %r11,%rdx		# len--
+0x00a5: 767500000000000000     | jg L5			# if len > 0, goto Loop
+0x00ae: 90                     | L4:	ret			# Return
+                               |  
+0x00af:                        | .pos 0x100
+0x0100:                        | Stack:
+                               | 

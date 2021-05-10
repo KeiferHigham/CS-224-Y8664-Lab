@@ -1,0 +1,16 @@
+0x0000:                        |  main:
+0x0000: 30f00500000000000000   | irmovq 5, %rax
+0x000a: 30f70300000000000000   | irmovq 3, %rdi
+0x0014: 30fb0400000000000000   | irmovq 4, %r11
+0x001e: 30fc0700000000000000   | irmovq 7, %r12
+0x0028: 30fa0000000000000080   | irmovq $0x8000000000000000, %r10
+0x0032: 30f1ffffffffffffff7f   | irmovq $0x7fffffffffffffff, %rcx
+0x003c: 30f90f00000000000000   | irmovq $0x000000000000000f, %r9
+0x0046: 30f80000000000000080   | irmovq $0x8000000000000000, %r8
+0x0050: 608a                   | addq %r8, %r10 // this should be negative
+0x0052: 6019                   | addq %rcx, %r9 // this should be positive two negative positve
+0x0054: 6070                   | addq %rdi, %rax
+0x0056: 6170                   | subq %rdi,%rax
+                               | 
+0x0058: 63bc                   | xorq %r11, %r12
+0x005a: 62bc                   | andq %r11, %r12

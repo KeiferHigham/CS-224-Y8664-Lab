@@ -1,0 +1,6 @@
+0x0000:                        | main:
+0x0000: 30f28877665544332211   | irmovq 0x1122334455667788, %rdx
+0x000a: 30f70a00000000000000   | irmovq $10, %rdi
+0x0014: 2076                   | rrmovq %rdi, %rsi
+0x0016: 2027                   | rrmovq %rdx, %rdi
+0x0018: 00                     | halt
